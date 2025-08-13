@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>미니 챗봇</title>
+  <style>
+    body {
+      font-family: 'Arial';
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      padding: 50px;
+    }
+
+    .chatbox {
+      width: 400px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .messages {
+      height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .user, .bot {
+      margin: 5px 0;
+      padding: 8px 12px;
+      border-radius: 20px;
+      max-width: 70%;
+      clear: both;
+    }
+
+    .user {
+      background-color: #d1e7ff;
+      float: right;
+    }
+
+    .bot {
+      background-color: #e0e0e0;
+      float: left;
+    }
+
+    input {
+      width: 80%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 10px;
+      margin-left: 5px;
+      border: none;
+      background: #007bff;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="chatbox">
+    <div class="messages" id="messages"></div>
+    <input type="text" id="userInput" placeholder="메시지를 입력하세요" />
+    <button id="sendBtn">전송</button>
+  </div>
+
+  <script>
+    const messages = document.getElementById("messages");
+    const userInput = document.getElementById("userInput");
+    const sendBtn = document.getElementById("sendBtn");
+
+    // 챗봇 응답 사전
+    const responses = {
+      "안녕": "안녕하세요! 😊",
+      "이름이 뭐야": "저는 미니 챗봇이에요!",
+      "뭐해": "당신과 이야기하고 있어요!",
+      "잘가": "다음에 또 만나요 👋",
+    };
+
+    function addMessage(text, sender) {
+      const div = document.createElement("div");
+      div.classList.add(sender);
+      div.innerText = text;
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function handleSend() {
+      const input = userInput.value.trim();
+      if (!input) return;
+
+      addMessage(input, "user");
+
+      const lower = input.toLowerCase();
+      let reply = "죄송해요, 이해하지 못했어요 😢";
+
+      for (let key in responses) {
+        if (lower.includes(key)) {
+          reply = responses[key];
+          break;
+        }
+      }
+
+      setTimeout(() => addMessage(reply, "bot"), 500);
+      userInput.value = "";
+    }
+
+    sendBtn.addEventListener("click", handleSend);
+    userInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") handleSend();
+    });
+  </script>
+</body>
+</html>
