@@ -10,7 +10,20 @@ async function getDust(sido = "대구"){
         const res = await fetch(url);
         const data = await res.json();
         const item = data.response.body.items[0];
-        return `${item.stationName}의 미세먼지 수치는 ${item.pm10Value}㎍/㎥입니다.`
+        const pm10 = parseInt(item.pm10Value);
+        
+        //미세먼지 등급 판정
+        let grade = "";
+        if (pm10 <= 30){
+            grade = "좋음";
+        }else if(pm10 <= 80){
+            grade = "보통";
+        }else if(pm10 <= 150){
+            grade = "나쁨"
+        }else{
+            grade = 매우나쁨
+        }
+        return `${sido} ${item.stationName}의 미세먼지 수치는 ${grade}상태입니다.`
     }catch (err){
         console.error("API 호출 오류:", err);
         return "미세먼지 정보를 불러오지 못했어요."
@@ -56,13 +69,24 @@ function handleSend() {
 
     // 입력을 소문자로 변환 대소문자 구분 없이 검색하기 위해 
     const lower = input.toLowerCase();
-    // 사용자가 무슨 말을 하든 기본적으로 이 말을 출력하도록 설정
-    //아무 키워드도 못 찾았을 경우의 기본 응답
+
+  //만약 메세지에 "미세먼지"라는 단어가 포함되어 있으면
     if(lower.includes("미세먼지")){
-        getDust("대구").then(reply => addMesseage(reply, "bot"));
+        //지원하는 지역 목록 (더 추가 가능)
+        const cities = ["서울","부산","대구","인천","광주","대전","울산","세종","경기","강원","충북","충남","전북","전남","경북","경남","제주"]
+        
+        //입력에 포함된 지역명 찾기
+        let foundCity = cities.find(city => lower.includes(city));
+
+        //지역명을 못 찾으면 기본값은 대구로
+        if(!foundCity) foundCity = "대구";
+
+        getDust(foundCity).then(reply => addMesseage(reply, "bot"));
         userInput.value = "";
         return;
     }
+    // 사용자가 무슨 말을 하든 기본적으로 이 말을 출력하도록 설정
+      //아무 키워드도 못 찾았을 경우의 기본 응답
     let reply = "죄송해요, 이해하지 못했어요ㅠㅠ";
     
     //responses객체의 모든 키 안녕 ,뭐해 등을 하나씩 확인 

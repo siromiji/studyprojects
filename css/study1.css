@@ -12,7 +12,15 @@ body{
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
+.chatbox >.imgbox{
+    display: flex;
+    justify-content: center;
+}
+.chatbox >.imgbox> img{
+    width:100px;
+    height:100px;
 
+}
 .messages{
 
     height:300px;
