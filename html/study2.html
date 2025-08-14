@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/study2.css">
+    <script src="../js/study1.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="wrap">
+        <div class="card" role="region" aria-label="디지털시계">
+            <header>
+                <div class="controls" aria-label="환경 설정">
+                    <button id="toggle-12-24" class="accent" aria-pressed="flase">24시간</button>
+                    <button id="toggle-seconds" aria-pressed="true">초 표시</button>
+                    <button id="pause" aria-pressed="false">일시정지</button>
+                    <select id="locale" aria-label="언어/형식">
+                        <option value="ko-KR">한국어 (ko-KR)</option>
+                        <option value="ko-KR">English (en-Us)</option>
+                        <option value="ko-KR">日本語 (ja-JP)</option>
+                    </select>
+                    <button id="copy-time" title="현재 시각 복사">복사</button>
+                </div>
+            </header>
+            <section class="clock">
+                <div id="time" class="time" aria-live="polite" aria-atomic="true">00
+                    <span class="blinker">
+                        :
+                    </span>
+                    00
+                    <span class="blinker">
+                        :
+                    </span>
+                    00
+                </div>
+                <div id="date" class="date">YYYY-MM-DD (요일)</div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
