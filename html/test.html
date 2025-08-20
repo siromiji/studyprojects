@@ -3,222 +3,105 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>디지털 시계</title>
+  <title>마음의 소라고동 — 랜덤 글귀</title>
   <style>
-    :root {
-      --bg: #0f172a;           /* slate-900 */
-      --panel: #111827cc;      /* semi-transparent */
-      --text: #e5e7eb;         /* gray-200 */
-      --accent: #60a5fa;       /* blue-400 */
-      --muted: #94a3b8;        /* slate-400 */
-    }
     * { box-sizing: border-box; }
-    html, body {
-      height: 100%;
-      margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans KR, Helvetica, Arial;
-      background: radial-gradient(1200px 800px at 70% -10%, #1f2937 0%, #0b1222 40%, var(--bg) 80%);
-      color: var(--text);
-    }
-    .wrap {
-      min-height: 100%;
-      display: grid;
-      place-items: center;
-      padding: 24px;
-    }
-    .card {
-      width: min(720px, 92vw);
-      background: var(--panel);
-      backdrop-filter: blur(10px);
-      border: 1px solid #1f2937;
-      border-radius: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
-      padding: 28px 24px 20px;
-    }
-    .card header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    h1 {
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: .02em;
-      margin: 0;
-      color: var(--muted);
-    }
-    .clock {
-      display: grid;
-      gap: 12px;
-      justify-items: center;
-      margin: 12px 0 8px;
-    }
-    .time {
-      font-variant-numeric: tabular-nums;
-      font-size: clamp(40px, 10vw, 96px);
-      line-height: 1;
-      font-weight: 800;
-      letter-spacing: .04em;
-      text-shadow: 0 0 20px rgba(96,165,250,.25);
-    }
-    .date {
-      color: var(--muted);
-      font-size: clamp(14px, 2.8vw, 18px);
-      letter-spacing: .04em;
-    }
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      justify-content: center;
-      margin-top: 14px;
-    }
-    button, select {
-      background: #0b1222;
-      color: var(--text);
-      border: 1px solid #1f2937;
-      padding: 10px 14px;
-      border-radius: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: transform .05s ease, background .2s ease, border-color .2s ease;
-    }
-    button:hover, select:hover { background: #0f172a; }
-    button:active { transform: translateY(1px); }
-    .accent { border-color: #1e3a8a; box-shadow: 0 0 0 2px rgba(96,165,250,.2) inset; }
-    .footer {
-      margin-top: 16px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 12px;
-    }
-    .blinker { opacity: 1; transition: opacity .2s linear; }
-    .blinker.off { opacity: .25; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; background: #f7f7fb; color: #222; }
+    .wrap { max-width: 680px; margin: 48px auto; padding: 0 16px; }
+    h1 { font-size: 24px; margin: 0 0 12px; }
+    p.hint { margin: 0 0 20px; color: #666; }
+    .card { background: #fff; border-radius: 16px; padding: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
+    label { display: block; font-size: 14px; color: #555; margin-bottom: 8px; }
+    textarea, input { width: 100%; border: 1px solid #ddd; border-radius: 12px; padding: 12px 14px; font-size: 16px; outline: none; }
+    textarea { resize: vertical; min-height: 72px; }
+    .row { display: flex; gap: 12px; margin-top: 12px; align-items: center; }
+    button { cursor: pointer; border: 0; border-radius: 12px; padding: 12px 16px; font-size: 16px; }
+    .btn-primary { background: #6b7cff; color: #fff; }
+    .btn-ghost { background: #f0f1ff; color: #3b49df; }
+    .result { margin-top: 18px; padding: 18px; background: #fafafe; border: 1px solid #eceefe; border-radius: 12px; }
+    .result small { display:block; color:#666; margin-bottom: 8px; }
+    .quote { font-size: 18px; line-height: 1.7; }
+    .muted { color:#888; font-size: 14px; margin-top: 8px; }
+    .page { font-variant-numeric: tabular-nums; font-size: 12px; color:#999; }
+    footer { margin-top: 28px; color:#888; font-size: 13px; text-align: center; }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="card" role="region" aria-label="디지털 시계">
-      <header>
-        <h1>디지털 시계 • HTML + CSS + JS</h1>
-        <div class="controls" aria-label="환경 설정">
-          <button id="toggle-12-24" class="accent" aria-pressed="false">24시간</button>
-          <button id="toggle-seconds" aria-pressed="true">초 표시</button>
-          <button id="pause" aria-pressed="false">일시정지</button>
-          <select id="locale" aria-label="언어/형식">
-            <option value="ko-KR">한국어 (ko-KR)</option>
-            <option value="en-US">English (en-US)</option>
-            <option value="ja-JP">日本語 (ja-JP)</option>
-          </select>
-          <button id="copy-time" title="현재 시각 복사">복사</button>
-        </div>
-      </header>
+    <h1>마음의 소라고동 🐚</h1>
+    <p class="hint">고민되거나 마음이 복잡할 때, 질문을 적고 아무 페이지나 펼치듯 <b>글귀 뽑기</b>를 눌러보세요.</p>
 
-      <section class="clock">
-        <div id="time" class="time" aria-live="polite" aria-atomic="true">00<span class="blinker">:</span>00<span class="blinker">:</span>00</div>
-        <div id="date" class="date">YYYY-MM-DD (요일)</div>
-      </section>
+    <div class="card">
+      <label for="question">질문(선택):</label>
+      <textarea id="question" placeholder="예) 오늘은 쉬어도 괜찮을까?"></textarea>
 
-      <div class="footer">브라우저만 있으면 실행됩니다. 실시간 업데이트 / 12·24시간 / 초표시 / 일시정지 / 언어 변경 지원.</div>
+      <div class="row">
+        <button id="askBtn" class="btn-primary">글귀 뽑기</button>
+        <button id="anotherBtn" class="btn-ghost" title="다른 페이지를 펼쳐요">다시 뽑기</button>
+      </div>
+
+      <div id="result" class="result" hidden>
+        <small id="page" class="page"></small>
+        <div id="quote" class="quote"></div>
+        <div id="echo" class="muted"></div>
+      </div>
     </div>
+
+    <footer>※ 글귀는 예시입니다. 아래 코드의 <code>QUOTES</code> 배열에 원하는 문장을 자유롭게 추가하세요.</footer>
   </div>
 
   <script>
-    // 상태
-    const state = {
-      showSeconds: true,
-      is24h: true,
-      paused: false,
-      locale: 'ko-KR'
-    };
+    // 1) 글귀 모음 — 여기에 원하는 문장을 계속 추가/수정하세요.
+    const QUOTES = [
+      "오늘도 괜찮아. 충분히 잘하고 있어.",
+      "힘들면 잠시 멈춰도 돼. 멈춤도 한 걸음이야.",
+      "작은 걸음도 앞으로 가는 걸음이야.",
+      "마음이 복잡하면, 먼저 숨을 깊게 쉬어봐.",
+      "완벽하지 않아도 시작할 수 있어.",
+      "지금 필요한 건 속도가 아니라 방향이야.",
+      "너의 속도로 가도 괜찮아.",
+      "오늘의 해답은 내일 다르게 보일 수도 있어. 지금의 너에게 친절하자.",
+      "해야 할 일보다 중요한 건, 지금의 나를 돌보는 일.",
+      "괜찮다는 말은 네가 이미 충분히 애쓰고 있다는 뜻이야.",
+      "잠시 내려놓아도, 길은 사라지지 않아.",
+      "가벼운 한 걸음이 무거운 마음을 이긴다.",
+      "마음은 파도 같아. 흔들려도 결국 잔잔해져."
+    ];
 
-    // 요소 참조
-    const $time = document.getElementById('time');
-    const $date = document.getElementById('date');
-    const $toggle1224 = document.getElementById('toggle-12-24');
-    const $toggleSeconds = document.getElementById('toggle-seconds');
-    const $pause = document.getElementById('pause');
-    const $locale = document.getElementById('locale');
-    const $copy = document.getElementById('copy-time');
+    // 2) DOM 참조
+    const $question = document.getElementById('question');
+    const $askBtn = document.getElementById('askBtn');
+    const $anotherBtn = document.getElementById('anotherBtn');
+    const $resultWrap = document.getElementById('result');
+    const $page = document.getElementById('page');
+    const $quote = document.getElementById('quote');
+    const $echo = document.getElementById('echo');
 
-    // 유틸: 0 채우기
-    const pad = (n) => String(n).padStart(2, '0');
+    // 3) 유틸: 랜덤 정수 & "책 페이지 넘기기" 느낌
+    const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-    // 시각 그리기
-    function render(now = new Date()) {
-      const h24 = now.getHours();
-      const hours = state.is24h ? h24 : (h24 % 12 || 12);
-      const minutes = now.getMinutes();
-      const seconds = now.getSeconds();
+    function openRandomPage() {
+      // 책 페이지를 가정(예: 1~256p)
+      const pageNum = randInt(1, 256);
+      const idx = randInt(0, QUOTES.length - 1);
 
-      const colonNodes = $time.querySelectorAll('.blinker');
-      colonNodes.forEach(c => c.classList.toggle('off'));
+      $page.textContent = `p.${String(pageNum).padStart(3, '0')}`;
+      $quote.textContent = QUOTES[idx];
 
-      const h = pad(hours);
-      const m = pad(minutes);
-      const s = pad(seconds);
-
-      $time.innerHTML = state.showSeconds
-        ? `${h}<span class="blinker">:</span>${m}<span class="blinker">:</span>${s}`
-        : `${h}<span class="blinker">:</span>${m}`;
-
-      const dateFmt = new Intl.DateTimeFormat(state.locale, { dateStyle: 'full' });
-      $date.textContent = dateFmt.format(now);
+      const q = $question.value.trim();
+      $echo.textContent = q ? `질문: “${q}”` : "";
+      $resultWrap.hidden = false;
     }
 
-    // 타이머
-    let timer = setInterval(() => { if (!state.paused) render(); }, 1000);
-    render();
+    // 4) 이벤트
+    $askBtn.addEventListener('click', openRandomPage);
+    $anotherBtn.addEventListener('click', openRandomPage);
 
-    // 컨트롤 이벤트
-    $toggle1224.addEventListener('click', () => {
-      state.is24h = !state.is24h;
-      $toggle1224.textContent = state.is24h ? '24시간' : '12시간';
-      $toggle1224.classList.toggle('accent', state.is24h);
-      render();
-    });
-
-    $toggleSeconds.addEventListener('click', () => {
-      state.showSeconds = !state.showSeconds;
-      $toggleSeconds.textContent = state.showSeconds ? '초 표시' : '초 숨김';
-      $toggleSeconds.classList.toggle('accent', state.showSeconds);
-      render();
-    });
-
-    $pause.addEventListener('click', () => {
-      state.paused = !state.paused;
-      $pause.textContent = state.paused ? '재생' : '일시정지';
-      $pause.classList.toggle('accent', state.paused);
-      render();
-    });
-
-    $locale.addEventListener('change', () => {
-      state.locale = $locale.value;
-      render();
-    });
-
-    $copy.addEventListener('click', async () => {
-      const now = new Date();
-      const hh = pad(now.getHours());
-      const mm = pad(now.getMinutes());
-      const ss = pad(now.getSeconds());
-      const txt = `${hh}:${mm}:${ss}`;
-      try {
-        await navigator.clipboard.writeText(txt);
-        $copy.textContent = '복사됨!';
-        setTimeout(() => ($copy.textContent = '복사'), 1200);
-      } catch (e) {
-        alert('복사 실패: ' + e.message);
+    // 5) 편의: Ctrl/Cmd+Enter 로도 뽑기
+    $question.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        openRandomPage();
       }
-    });
-
-    // 접근성: 키보드 단축키 (S: 초 토글, T: 12/24h, P: 일시정지)
-    window.addEventListener('keydown', (e) => {
-      if (e.key.toLowerCase() === 's') $toggleSeconds.click();
-      if (e.key.toLowerCase() === 't') $toggle1224.click();
-      if (e.key.toLowerCase() === 'p') $pause.click();
     });
   </script>
 </body>

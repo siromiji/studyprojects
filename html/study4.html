@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/study4.css">
+    <script src="../js/study4.js" defer></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="wrap">
+        <h1>🐚마법의 소라고동🐚</h1>
+        <p class="hint">고민되거나 마음이 복잡할 때,질문을 적고 아무 페이지나 펼치듯 
+            <b>글귀 뽑기</b>를 눌러보세요.</p>
+
+        <div class = "card">
+            <label for="question">질문</label>
+            <textarea name="question"  id="question" placeholder="예 : 오늘은 쉬어도 괜찮을까?"></textarea>
+            
+            <div class="row">  
+                <button id="askBtn" class="btn-primary">글귀 뽑기</button>
+                <button id="anotherBtn" class = "btn-ghost" title="다른 페이지를 펼쳐요">다시 뽑기</button>
+            </div>
+
+            <div id = "result" class="result" hidden>
+                <div id="quote" class="quote"></div>
+                <div id="echo" class="muted"></div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

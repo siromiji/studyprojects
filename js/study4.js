@@ -1,0 +1,58 @@
+const QUOTES = [
+    "오늘도 괜찮아. 충분히 잘하고 있어.",
+      "힘들면 잠시 멈춰도 돼. 멈춤도 한 걸음이야.",
+      "작은 걸음도 앞으로 가는 걸음이야.",
+      "마음이 복잡하면, 먼저 숨을 깊게 쉬어봐.",
+      "완벽하지 않아도 시작할 수 있어.",
+      "지금 필요한 건 속도가 아니라 방향이야.",
+      "너의 속도로 가도 괜찮아.",
+      "오늘의 해답은 내일 다르게 보일 수도 있어. 지금의 너에게 친절하자.",
+      "해야 할 일보다 중요한 건, 지금의 나를 돌보는 일.",
+      "괜찮다는 말은 네가 이미 충분히 애쓰고 있다는 뜻이야.",
+      "잠시 내려놓아도, 길은 사라지지 않아.",
+      "가벼운 한 걸음이 무거운 마음을 이긴다.",
+      "마음은 파도 같아. 흔들려도 결국 잔잔해져.",
+      "네가 좋아하는 걸 할 때 가장 빛나.",
+    "밤이 깊어도 결국 아침은 온다.",
+    "조금 늦어도 괜찮아. 결국 도착할 거야.",
+    "마음이 무거울 땐 아주 작은 기쁨부터 찾아봐.",
+    "넘어져도 괜찮아. 다시 일어나면 돼.",
+    "누구나 쉬고 싶을 때가 있어. 그건 약함이 아니라 자연스러움이야.",
+    "네가 걸어온 길도 충분히 의미 있어.",
+    "내일의 해답은 내일의 내가 알고 있어.",
+    "작은 친절 하나가 큰 위로가 될 수 있어.",
+    "흐린 날이 있어야 맑은 날도 반짝여.",
+    "가끔은 '괜찮다'는 말이 가장 좋은 답이야.",
+    "조급해하지 않아도, 시간은 결국 흘러가."
+];
+
+//DOM 참조 
+const $question = document.getElementById('question');
+const $askBtn = document.getElementById('askBtn');
+const $anotherBtn = document.getElementById('anotherBtn');
+const $resultWrap = document.getElementById('result');
+
+const $quote = document.getElementById('quote');
+const $echo = document.getElementById('echo');
+
+const randInt = (min,max)=> Math.floor(Math.random() * (max-min+1))+min;
+
+function openRandomPage() {
+    const pageNum = randInt(1 , 256);
+    const idx = randInt(0,QUOTES.length - 1);
+
+    $quote.textContent = QUOTES[idx];
+
+    const q = $question.value.trim();
+    $echo.textContent = q ? `질문:"${q}"`: "";
+    $resultWrap.hidden = false;
+}
+
+$askBtn.addEventListener('click',openRandomPage);
+$anotherBtn.addEventListener('click',openRandomPage);
+
+$question.addEventListener('keydown' , (e) =>{
+    if (e.key ==='Enter'){
+        openRandomPage();
+    }
+})
