@@ -21,7 +21,7 @@ async function getDust(sido = "대구"){
         }else if(pm10 <= 150){
             grade = "나쁨"
         }else{
-            grade = 매우나쁨
+            grade = "매우나쁨"
         }
         return `${sido} ${item.stationName}의 미세먼지 수치는 ${grade}상태입니다.`
     }catch (err){

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/study5.css">
+    <script src="../js/study5.js" defer></script>
+    <title>미니 페인트</title>
+</head>
+<body>
+    <h1>미니 페인트 (마우스/터치로 그리기)</h1>
+    <div class="toolbar">
+        <label>색상: 
+            <input type="color" id = "color" value="#111111" class="pill">
+        </label>
+        <span class="dot" id="preview"></span>
+
+        <label >붓 크기:
+            <input type="rang" id="size" min="1" max="40" value="8">
+            <span id="sizeVal" class="pill">8 px</span>
+        </label>
+
+        <button id="earaser" class="btn light">지우개</button>
+        <button id="clear" class="btn light">전체지우기</button>
+        <button id="save" class="btn">PNG로 저장</button>
+    </div>
+
+    <canvas id="board" width="720px" height="440px"></canvas>
+
+    
+
+</body>
+</html>
