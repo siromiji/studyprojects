@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/study7.css">
+    <script src="../js/study7.js" defer></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="app">
+        <h1>타자기 텍스트 애니메이션</h1>
+        <p class="desc">아래 문장을 한 글자씩 타이핑하고, 끝나면 지웠다가 다음 문장으로 넘어가요.(수정하고 ▶ 재생!)</p>
+        <div class="stage">
+            <span id = output></span><span class="cursor" id="cursor">&nbsp;</span>
+        </div>
+
+        <div class="row">
+            <label >속도: <input id="speed" type="range" min="20" max="200" value="80"><span class="pill" id="speedVal">80 ms/글자</span>
+            </label>
+
+            <label>정지시간: <input id="pause" type="range" min="300" max="2000" step="100" value="800">
+            <span class="pill" id="pauseVal">800 ms
+            </span></label>
+
+            <button class="btn" id="play">▶ 재생</button>
+            <button class="btn light" id="stop">■ 정지</button>
+
+        </div>
+
+        <div class="row">
+            <div class = "grow">
+                <label for="lines">
+                    <strong>문장들 (줄바꿈으로 구분)</strong>
+                </label>
+                <textarea id="lines">
+                    타자기 효과가 나와라 !
+                </textarea>
+                <small>Tip: 각 줄이 한 문장이에요. 엔터로 문장을 추가/삭제하세요.</small>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
