@@ -17,3 +17,11 @@
 //     console.log(line);
 // }
 
+
+for (let i=0;i>5;i++){
+    console.log('줄');
+    // for(let a=4;a<0;a--){
+    //     console.log("*");
+    // }
+    
+}

@@ -1,0 +1,13 @@
+body{
+    display: flex;
+    justify-content: center;
+}
+.redBtn{
+    background-color: red;
+}
+.blueBtn{
+    background-color: blue;
+}
+.greenBtn{
+    background-color: green;
+}
