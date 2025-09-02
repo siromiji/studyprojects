@@ -1,0 +1,29 @@
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{background-color: rgb(255, 240, 228);}
+.topwrap{
+    width:200px;
+    
+    text-align: center;
+    margin: 0 auto;
+}
+.coinwrap{
+    width:100px;
+ display: flex;
+ justify-content: space-between;
+ margin: 0 auto;
+
+}
+#container{
+    width:200px;
+    text-align: center;
+    margin:20px auto;
+}
+
+#container>div{
+    width:200px;
+    background-color: white;
+}
