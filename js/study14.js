@@ -1,40 +1,11 @@
-const textInput  = document.querySelector("#textInput");
-const container = document.querySelector("#container");
-let coinP = document.querySelector('#coin');
-
-let coin = 0;
-
-textInput.addEventListener('keydown' , (event)=>{
-    
-    if( event.key === 'Enter'){
-        const promptResult = prompt('얼마를 적립하시겠습니까?','100');
-        let amount = Number(promptResult);
-
-        if(isNaN(amount)){
-            alert("숫자를 입력해주세요!");
-            return;
-        }
-
-        
-        const item = document.createElement("div");
-        item.textContent = `${textInput.value}     +${promptResult}`;
-         
-        item.dataset.amount = amount;
-        //dataset이 뭐지
-        container.appendChild(item);
-        textInput.value="";
-    }
-    
-
+const btn = document.getElementById("btn");
+//콜백함수
+btn.addEventListener("click",function(){
+    document.body.style.backgroundColor = "skyblue";
 });
+//화살표함수
+btn.addEventListener("click", ()=>{
+    console.log("버튼 클릭됨!")
+});
+//차이 : 화살표 함수는 this가 다르게 동작
 
-container.addEventListener('click',(e)=>{
-    const item = e.target;
-    if(!item.dataset.amount)return;
-    
-    const amount = Number(item.dataset.amount);
-    coin += amount;
-    coinP.textContent = coin;
-
-    item.remove();
-})
