@@ -1,0 +1,11 @@
+import ColorBox from "./component/ColorBox.jsx";
+
+export default function App(){
+    return(
+        <div>
+            <h1 style={{textAlign:"center"}}>랜덤색상 박스 예제</h1>
+            <ColorBox/>
+        </div>
+    )
+}
+
